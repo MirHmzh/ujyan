@@ -18,6 +18,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+<<<<<<< HEAD
         /*$finished = Sentry::getUser()->finished;
         if (Sentry::check() && Sentry::getUser()->hasAccess('admin')) {
             return view('admin');
@@ -35,6 +36,16 @@ class HomeController extends Controller
     public function user()
     {
         return view('sentinel.sessions.agreement');
+=======
+        $finished = Sentry::getUser()->finished;
+        if ($finished == '0') {
+            alert()->info('Kerjakan dalam rentang waktu yang disediakan','Selamat Mengerjakan')
+                   ->autoclose(5000);
+            return view('exam.query');
+        }else{
+            return view('home');
+        }
+>>>>>>> 7c418c3449949bd902fa4a63587579f395846ec9
     }
 
     public function pdf()
@@ -56,7 +67,11 @@ class HomeController extends Controller
 		$dompdf->loadHtml($html);
 
 		// (Optional) Setup the paper size and orientation
+<<<<<<< HEAD
 		$dompdf->setPaper('A4', 'potrait');
+=======
+		$dompdf->setPaper('A4', 'landscape');
+>>>>>>> 7c418c3449949bd902fa4a63587579f395846ec9
 
 		// Render the HTML as PDF
 		$dompdf->render();
@@ -70,10 +85,14 @@ class HomeController extends Controller
 
     public function showsuccess()
     {
+<<<<<<< HEAD
         if (Sentry::check() && Sentry::getUser()->hasAccess('admin')) {
             return view('admin');
         }else{
             return view('home');
         }
+=======
+        return view('home');
+>>>>>>> 7c418c3449949bd902fa4a63587579f395846ec9
     }
 }

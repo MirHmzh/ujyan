@@ -67,4 +67,13 @@ User Profile
     </div>
 </div>
 
+<<<<<<< HEAD
+=======
+<div class="row">
+    <h4>User Object</h4>
+    <div class="divider"></div>
+    <code>{{ var_dump($user) }}</code>
+</div>
+
+>>>>>>> 7c418c3449949bd902fa4a63587579f395846ec9
 @stop
