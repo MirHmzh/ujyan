@@ -7,6 +7,9 @@ Log In
 
 {{-- Content --}}
 @section('content')
+<script type="text/javascript">
+    localStorage.clear();
+</script>
 <div class="row">
     <div class="col l6 offset-l3 m8 offset-m2 s12">
         <form method="POST" action="{{ route('sentinel.session.store') }}" accept-charset="UTF-8">

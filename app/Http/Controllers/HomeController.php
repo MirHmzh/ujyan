@@ -18,34 +18,31 @@ class HomeController extends Controller
 {
     public function index()
     {
-<<<<<<< HEAD
-        /*$finished = Sentry::getUser()->finished;
+        $target = Sentry::getUser()->id;
+        $data = User::find($target);
+        $now = Sentry::getUser()->start_time;
+        $exp_date = $now + 1440*60;
+        $finished = Sentry::getUser()->finished;
         if (Sentry::check() && Sentry::getUser()->hasAccess('admin')) {
             return view('admin');
         }else{
-            if ($finished == '0') {*/
+            if ($finished == '0') {
                 alert()->info('Kerjakan dalam rentang waktu yang disediakan','Selamat Mengerjakan')
                        ->autoclose(5000);
-                return view('exam.query');
-           /* }else{
+                    if ($data->start_time == null) {
+                        $data->start_time = time();
+                        $data->save();
+                    }
+                return view('exam.query', ['now' => $now, 'exp_date' => $exp_date]);
+            }else{
                 return view('home');
             }
-        }*/
+        }
     }
 
     public function user()
     {
         return view('sentinel.sessions.agreement');
-=======
-        $finished = Sentry::getUser()->finished;
-        if ($finished == '0') {
-            alert()->info('Kerjakan dalam rentang waktu yang disediakan','Selamat Mengerjakan')
-                   ->autoclose(5000);
-            return view('exam.query');
-        }else{
-            return view('home');
-        }
->>>>>>> 7c418c3449949bd902fa4a63587579f395846ec9
     }
 
     public function pdf()
@@ -67,11 +64,7 @@ class HomeController extends Controller
 		$dompdf->loadHtml($html);
 
 		// (Optional) Setup the paper size and orientation
-<<<<<<< HEAD
 		$dompdf->setPaper('A4', 'potrait');
-=======
-		$dompdf->setPaper('A4', 'landscape');
->>>>>>> 7c418c3449949bd902fa4a63587579f395846ec9
 
 		// Render the HTML as PDF
 		$dompdf->render();
@@ -85,14 +78,10 @@ class HomeController extends Controller
 
     public function showsuccess()
     {
-<<<<<<< HEAD
         if (Sentry::check() && Sentry::getUser()->hasAccess('admin')) {
             return view('admin');
         }else{
             return view('home');
         }
-=======
-        return view('home');
->>>>>>> 7c418c3449949bd902fa4a63587579f395846ec9
     }
 }

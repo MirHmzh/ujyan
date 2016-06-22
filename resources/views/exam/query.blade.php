@@ -1,7 +1,6 @@
 @extends('sentinel.layouts.default')
 
 @section('content')
-<<<<<<< HEAD
 <style type="text/css">
     div[id*=soal]{
         display: none;
@@ -13,22 +12,16 @@
 <div id="clock"></div>
 <script type="text/javascript">
 
-var fiveSeconds = new Date().getTime() + 7200000;
-=======
-<div id="clock"></div>
-<script type="text/javascript">
-var fiveSeconds = new Date().getTime() + 5000;
->>>>>>> 7c418c3449949bd902fa4a63587579f395846ec9
+/*var fiveSeconds = new Date().getTime() + 7200000;
  $('#clock').countdown(fiveSeconds, {elapse: true})
   .on('update.countdown', function(event) {
     var $this = $(this);
     if (event.elapsed) {
-<<<<<<< HEAD
       document.getElementById('form').submit();
     } else {
       $this.html(event.strftime('Waktu Tersisa: <span>%H:%M:%S</span><br><br><br>'));
    }
- });
+ });*/
 
 $(document).ready(function() {
 
@@ -281,7 +274,6 @@ $(document).ready(function() {
         });
 
         $('#submitted').on('click', function(){
-            localStorage.clear();
         });
 
         $(document).ready(function() {
@@ -299,8 +291,11 @@ $(document).ready(function() {
 
     $(document).ready(function(){
         if(localStorage.getItem('idsoal') == null){
+            localStorage.clear();
             localStorage.setItem('idsoal',1);
         }
+        $(window).unload(saveSettings);
+        loadSettings();
         var x = localStorage.getItem('idsoal');
         $('.soal').hide();
         $('#soal'+x).show();
@@ -308,6 +303,8 @@ $(document).ready(function() {
 
     var z=localStorage.getItem('idsoal');
     function toggle_visibility(){
+        z++;
+        localStorage.setItem('idsoal',z);
         $('.soal').hide();
         $('#soal'+z).show();
         var jml_soal = document.getElementsByClassName('soal').length;
@@ -315,18 +312,14 @@ $(document).ready(function() {
             $('.js-button').hide();
             $('#submitted').show();
         }
-        localStorage.setItem('idsoal',z);
-        z++;
     }
     function kirim(){
-        localStorage.clear();
         $('#form').submit();
         $('#btn-submitted').click();
+        localStorage.clear();
     };
 
     $(document).ready(function(){
-        $(window).unload(saveSettings);
-        loadSettings();
     });
 
     function loadSettings() {
@@ -430,6 +423,54 @@ $(document).ready(function() {
     }
 
 </script>
+
+@if(($now < $exp_date))
+<script type="text/javascript">
+var server_end = <?php echo $exp_date; ?> * 1000;
+var server_now = <?php echo time(); ?> * 1000;
+var client_now = new Date().getTime();
+var end = server_end - server_now + client_now; // this is the real end time
+
+var _second = 1000;
+var _minute = _second * 60;
+var _hour = _minute * 60;
+var _day = _hour *24
+var timer;
+
+function showRemaining()
+{
+    var now = new Date();
+    var distance = end - now;
+    if (distance < 0 ) {
+       clearInterval( timer );
+       document.getElementById('form').submit();
+
+       return;
+    }
+    var days = Math.floor(distance / _day);
+    var hours = Math.floor( (distance % _day ) / _hour );
+    var minutes = Math.floor( (distance % _hour) / _minute );
+    var seconds = Math.floor( (distance % _minute) / _second );
+
+    var countdown = document.getElementById('countdown');
+    countdown.innerHTML = '';
+    if (days) {
+        countdown.innerHTML += 'Days: ' + days + '<br />';
+    }
+    countdown.innerHTML += 'Waktu Tersisa : ' + hours ;
+    countdown.innerHTML += ' : ' + minutes;
+    countdown.innerHTML += ' : ' + seconds;
+}
+
+timer = setInterval(showRemaining, 1000);
+</script>
+
+@else
+<script type="text/javascript">
+    document.getElementById('form').submit();
+</script>
+@endif
+<div id="countdown"></div>
 <div class="row">
     <form method="POST" id="form" class="col s12" action="pdf">
         <div id="soal1" class="soal row" style="page-break-before: always;">
@@ -925,72 +966,6 @@ $(document).ready(function() {
     </div>
 </div>
 
-
-
-=======
-      document.getElementById('form').submit();;
-    } else {
-      $this.html(event.strftime('To end: <span>%H:%M:%S</span>'));
-   }
- });
-
-</script>
-
-<div class="row">
-    <form method="POST" id="form" class="col s12" action="pdf">
-	    <span class="question[]">1. Apa istilah lain tahu bulat?</span>
-	    <div class="row">
-		    <p>
-		      <input name="answer1" type="radio" id="test1" value="A" />
-		      <label for="test1">A. Tahu Bundar</label>
-		    </p>
-		    <p>
-		      <input name="answer1" type="radio" id="test2" value="B" />
-		      <label for="test2">B. Tahu Lingkaran</label>
-		    </p>
-		    <p>
-		      <input name="answer1" type="radio" id="test3" value="C" />
-		      <label for="test3">C. Circle Tofu</label>
-		    </p>
-		    <p>
-		      <input name="answer1" type="radio" id="test4" value="D" />
-		      <label for="test4">D. Tahu Bola</label>
-		    </p>
-	    </div>
-
-	    <span class="question[]">2. Berapa skor Tahu Bulatmu?</span>
-	    <div class="row">
-		    <p>
-		      <input name="answer2" type="radio" id="test5" value="A" />
-		      <label for="test5">A. 900jt</label>
-		    </p>
-		    <p>
-		      <input name="answer2" type="radio" id="test6" value="B" />
-		      <label for="test6">B. Lupa</label>
-		    </p>
-		    <p>
-		      <input name="answer2" type="radio" id="test7" value="C" />
-		      <label for="test7">C. Ga Main</label>
-		    </p>
-		    <p>
-		      <input name="answer2" type="radio" id="test8" value="D" />
-		      <label for="test8">D. Main Cheat Gw</label>
-		    </p>
-	    </div>
-
-	    2. Tulis logaritma penggorengan tahu bulat!<br>
-    	<div class="row">
-        	<div class="input-field col s12">
-        		<textarea name="array" id="textarea1" class="materialize-textarea"></textarea>
-        		<label for="textarea1">Textarea</label>
-        	</div>
-    	</div>
-    	<button class="btn waves-effect" type="submit">Submit
-			<i class="material-icons right">send</i>
-		</button>
-    </form>
-</div>
->>>>>>> 7c418c3449949bd902fa4a63587579f395846ec9
 @endsection
 
 @section('js')
